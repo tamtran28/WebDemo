@@ -1,0 +1,65 @@
+﻿@model IEnumerable<WebDemo.Models.DetailSalaryView>
+@if (TempData["alert"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["alert"]
+    </div>
+}
+@if (TempData["aler"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["aler"]
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            @*
+        <th>
+            Detail Salary ID
+        </th>
+        <th>Salary ID</th>*@
+            <th>Employee Name</th>
+            <th>Base Salary</th>
+            <th>Total Working Days</th>
+            <th>Total OverTime</th>
+
+            <th>Social Insurance</th>
+            <th>Health Insurance</th>
+            <th>Personal Income Tax</th>
+            <th>Total allovance</th>
+            <th>Total Salary</th>
+            <th>Date Created</th>
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            @*
+        <td>@item.DetailSalaryId</td>
+        <td>@item.SalaryId</td>*@
+            <td>@item.EmployeeName</td>
+            <td>@item.BaseSalary.ToString("#,##0 VNĐ")</td>
+            <td>@item.TotalWorkingDays</td>
+            <td>@item.OverTime</td>
+            <td>@item.SocialInsurance.ToString("#,##0 VNĐ")</td>
+            <td>@item.HealthInsurance.ToString("#,##0 VNĐ")</td>
+            <td>@item.PersonalIncomeTax.ToString("#,##0 VNĐ")</td>
+            <td>
+                @item.ToltalAllowances.ToString("#,##0 VNĐ")
+            </td>
+
+            <td>@item.TotalSalary.ToString("#,##0 VNĐ")</td>
+            <td>@item.DateCreate.ToShortDateString()</td>
+
+
+
+        </tr>
+        }
+    </tbody>
+</table>
+

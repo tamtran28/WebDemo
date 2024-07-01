@@ -1,0 +1,102 @@
+﻿@model IEnumerable<WebDemo.Models.SalaryView>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["alert"] != null)
+{
+<div class="alert alert-warning">
+    @TempData["alert"]
+</div>
+}
+@if (TempData["aler"] != null)
+{
+<div class="alert alert-warning">
+    @TempData["aler"]
+</div>
+}
+<h1>List Salary</h1>
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalWorkingDay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateRecieved)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Employee)
+                </th>
+                <th>
+                    Total Salary
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalWorkingDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateRecieved)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Detail)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.SalaryId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.SalaryId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.SalaryId">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+
+
+
+            <th>Total Salary</th>
+            <th>Total Working Days</th>
+            <th>Date Received</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.EmployeeId)</td>
+            <td>@Html.DisplayFor(modelItem => item.EmployeeName)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalWorkingDay)</td>
+
+            <td>@item.TotalSalary.ToString("#,##0 VNĐ")</td>
+            
+            <td>@Html.DisplayFor(modelItem => item.DateRecieved)</td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-action="Index" asp-controller="Employees" class="btn btn-primary">Back to List</a>
+</div>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#success-alert").fadeOut("slow");
+        }, 2000);
+    });
+</script>

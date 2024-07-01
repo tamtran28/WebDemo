@@ -1,0 +1,106 @@
+﻿@model WebDemo.Models.Employee
+
+@{
+    ViewData["Title"] = "AddEmployee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (ViewBag.SuccessMessage != null)
+{
+<div class="alert alert-success" role="alert">
+    @TempData["ErrorMessage"]
+</div>
+}
+
+@if (ViewData.ModelState.IsValid == false)
+{
+    <div class="alert alert-danger" role="alert">
+        Validation error: Please check your input.
+    </div>
+}
+
+<h1>Add Employee</h1>
+
+<hr />
+<div class="row">
+    <form asp-action="Add" asp-controller="Employees" style="width:90%">
+        <div class="col-md-8 offset-md-2">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label">First Name</label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MiddleName" class="control-label">Middle Name</label>
+                        <input asp-for="MiddleName" class="form-control" />
+                        <span asp-validation-for="MiddleName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label">Last Name</label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Gender" class="control-label"></label>
+                        <select asp-for="Gender" class="form-control">
+                            <option value="1">Male</option>
+                            <option value="0">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Birthday" class="control-label"></label>
+                        <input asp-for="Birthday" type="date" class="form-control" />
+                        <span asp-validation-for="Birthday" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber" class="control-label">Phone Number</label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateStartWork" class="control-label">Date Start Work</label>
+                        <input asp-for="DateStartWork" type="date" class="form-control" />
+                        <span asp-validation-for="DateStartWork" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PositionId" class="control-label">Position</label>
+                        <select asp-for="PositionId" class="form-control" asp-items="ViewBag.PositionId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DepartmentId" class="control-label">Department</label>
+                        <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label"></label>
+                        <select asp-for="Status" class="form-control">
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group offset-md-2 d-flex justify-content-between mt-3" style="margin-right:122px;">
+            <input type="submit" value="Add" class="btn btn-primary" style="margin-bottom:18px;" />
+            <div>
+                <a asp-action="Index" class="btn btn-primary">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

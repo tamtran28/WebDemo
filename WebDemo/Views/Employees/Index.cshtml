@@ -1,0 +1,163 @@
+﻿@model IEnumerable<WebDemo.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Success"] != null)
+{
+    <div id="success-alert" class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+
+@if (ViewData.ModelState.IsValid == false)
+{
+    <div class="alert alert-danger" role="alert">
+        Validation error: Please check your input.
+    </div>
+}
+
+
+<h2>Find</h2>
+<div class="row" style="margin-bottom:15px;">
+    <div class="col-md-8">
+        <input type="text" id="lastname" class="form-control" />
+    </div>
+    <div class="col-md-4">
+        <input type="button" class="btn btn-primary" onclick="findEmployee_click()" value="Find" />
+    </div>
+</div>
+<div id="list"></div>
+<h1>List Employees</h1>
+<p>
+    <a asp-action="AddEmployee" asp-controller="Employees" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Middle Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthday)
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                Date Start Work
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Position)
+            </th>
+            <th>Age</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MiddleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @if (item.Gender == 0)
+                    {
+                        <text>Female</text>
+                    }
+                    else if (item.Gender == 1)
+                    {
+                        <text>Male</text>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormattedBirthday)
+
+                    @*@Html.DisplayFor(modelItem => item.Birthday)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormattedDateStart)
+                    @*@Html.DisplayFor(modelItem => item.DateStartWork)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position.PositionId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                </td>
+                <td>
+                    <a asp-action="CalculateSalary" asp-controller="DetailSalary" asp-route-id="@item.EmployeeId" class="btn btn-primary">MonthlySalary</a>  |
+                    <a asp-action="SetEmployeeId" asp-controller="DetailSalary" asp-route-id="@item.EmployeeId" class="btn btn-primary">View Salary Details</a>  |
+                    <a asp-action="Index" asp-controller="Salary" class="btn btn-primary">List Salary</a>  |
+                    <a asp-action="formUpdate" asp-route-id="@item.EmployeeId" class="btn btn-primary" style="margin-top: 10px;">Edit</a> |
+                    @*<a asp-action="Details" asp-route-id="@item.EmployeeId">Details</a> |*@
+                    <a asp-action="formDelete" asp-route-id="@item.EmployeeId" class="btn btn-danger" style="margin-top: 10px;">Delete</a> <br />
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    function findEmployee_click() {
+        const name = document.getElementById("lastname").value;
+        // Create an XMLHttpRequest object
+        const xhttp = new XMLHttpRequest();
+
+        // Define a callback function
+        xhttp.onload = function () {
+            // Here you can use the Data
+            document.getElementById("list").innerHTML = xhttp.responseText;
+        }
+
+        // Send a request
+        const strUrl = "/Employees/findEmployee/" + name;
+        xhttp.open("GET", strUrl);
+        xhttp.send();
+
+    }</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#success-alert").fadeOut("slow");
+        }, 2000);
+    });
+</script>
